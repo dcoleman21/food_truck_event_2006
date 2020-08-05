@@ -1,7 +1,10 @@
 class Item
+  attr_reader :name,
+              :price
 
   def initialize(data)
-    # @argument = argument
+    @name  = data[:name]
+    @price = data[:price].delete('$').to_f
   end
 
 end
