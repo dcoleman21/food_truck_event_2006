@@ -5,6 +5,11 @@ class Event
   def initialize(name)
     @name        = name
     @food_trucks = []
+    @date        = Date.today
+  end
+
+  def date
+    @date.strftime('%d/%m/%Y')
   end
 
   def add_food_truck(food_truck)
@@ -41,6 +46,13 @@ class Event
       end
     end
     result
+  end
+
+  def overstocked_items
+    found= total_inventory.select do |item, food_truck|
+      food_truck[:quantity] > 50 && food_truck[:food_trucks].length > 1
+    end
+    found.keys
   end
 
 end
