@@ -18,8 +18,13 @@ class FoodTruck
   def potential_revenue
     @inventory.sum do |item, quantity|
       item.price * quantity
-    end 
+    end
   end
 
+  def all_items_in_stock
+    @inventory.keys.find_all do |item|
+      check_stock(item) > 0
+    end 
+  end
 
 end
