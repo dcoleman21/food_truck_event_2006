@@ -22,29 +22,52 @@ class EventTest < Minitest::Test
     assert_instance_of Event, @event
   end
 
+  def test_it_has_attributes
+    assert_equal "South Pearl Street Farmers Market", @event.name
+    assert_equal [], @event.food_trucks
+  end
+
+  def test_can_add_food_trucks
+    # @food_truck1.stock(@item1, 35)
+    # @food_truck1.stock(@item2, 7)
+    # @food_truck2.stock(@item4, 50)
+    # @food_truck2.stock(@item3, 25)
+    # @food_truck3.stock(@item1, 65)
+    @event.add_food_truck(@food_truck1)
+    @event.add_food_truck(@food_truck2)
+    @event.add_food_truck(@food_truck3)
+    expected = [@food_truck1, @food_truck2, @food_truck3]
+
+    assert_equal expected, @event.food_trucks
+  end
+
+  def test_get_food_truck_names
+    @event.add_food_truck(@food_truck1)
+    @event.add_food_truck(@food_truck2)
+    @event.add_food_truck(@food_truck3)
+    expected = ["Rocky Mountain Pies", "Ba-Nom-a-Nom", "Palisade Peach Shack"]
+
+    assert_equal expected, @event.food_truck_names
+  end
+
+  def test_can_find_food_trucks_that_sell_specific_items
+    @food_truck1.stock(@item1, 35)
+    @food_truck1.stock(@item2, 7)
+    @food_truck2.stock(@item4, 50)
+    @food_truck2.stock(@item3, 25)
+    @food_truck3.stock(@item1, 65)
+    @event.add_food_truck(@food_truck1)
+    @event.add_food_truck(@food_truck2)
+    @event.add_food_truck(@food_truck3)
+
+    assert_equal [@food_truck1, @food_truck3], @event.food_trucks_that_sell(@item1)
+    assert_equal [@food_truck2], @event.food_trucks_that_sell(@item4)
+  end
+
 end
 
 
-# event.name
-# #=> "South Pearl Street Farmers Market"
-# event.food_trucks
-# #=> []
-# #=> #<Item:0x007f9c56740d48...>
-# #=> #<Item:0x007f9c565c0ce8...>
-# #=> #<Item:0x007f9c562a5f18...>
-# #=> #<Item:0x007f9c56343038...>
-# food_truck1.stock(item1, 35)
-# food_truck1.stock(item2, 7)
-# food_truck2.stock(item4, 50)
-# food_truck2.stock(item3, 25)
-# food_truck3.stock(item1, 65)
-# event.add_food_truck(food_truck1)
-# event.add_food_truck(food_truck2)
-# event.add_food_truck(food_truck3)
-# event.food_trucks
-# #=> [#<FoodTruck:0x00007fe1348a1160...>, #<FoodTruck:0x00007fe1349bed40...>, #<FoodTruck:0x00007fe134910650...>]
-# event.food_truck_names
-# #=> ["Rocky Mountain Pies", "Ba-Nom-a-Nom", "Palisade Peach Shack"]
+
 # event.food_trucks_that_sell(item1)
 # #=> [#<FoodTruck:0x00007fe1348a1160...>, #<FoodTruck:0x00007fe134910650...>]
 # event.food_trucks_that_sell(item4)
