@@ -57,5 +57,15 @@ class FoodTruckTest < Minitest::Test
     assert_equal 243.75, @food_truck3.potential_revenue
   end
 
+  def test_can_get_all_items_in_stock
+    @food_truck.stock(@item1, 35)
+    @food_truck.stock(@item2, 7)
+    @food_truck2.stock(@item4, 50)
+    @food_truck2.stock(@item3, 25)
+    @food_truck3.stock(@item1, 65)
+
+    assert_equal [@item1, @item2], @food_truck.all_items_in_stock
+  end
+
 
 end
